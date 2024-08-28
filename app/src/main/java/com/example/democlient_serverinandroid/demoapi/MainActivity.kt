@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.todoLiveData.observe(this) { response: TodoUiState ->
             when (response) {
                 is TodoUiState.Loading -> binding.responseText.text = "Loading...."
-                is TodoUiState.Success -> binding.responseText.text = response.todo.title
+                is TodoUiState.Success -> binding.responseText.text = response.todo.title.toString()
                 is TodoUiState.Error -> binding.responseText.text =
                     "Error: ${response.throwable.message}"
             }

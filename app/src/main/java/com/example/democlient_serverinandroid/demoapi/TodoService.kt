@@ -16,6 +16,6 @@ interface TodoService {
             retrofit.create(TodoService::class.java)
     }
 
-    @GET("/todo/1")
+    @GET("/todos/1")
     fun getTodo(): Call<TodoResponse>
 }

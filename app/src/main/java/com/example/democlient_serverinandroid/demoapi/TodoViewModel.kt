@@ -1,5 +1,6 @@
 package com.example.democlient_serverinandroid.demoapi
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -30,11 +31,13 @@ class TodoViewModel(private val todoService: TodoService) : ViewModel() {
             override fun onResponse(p0: Call<TodoResponse>, response: Response<TodoResponse>) {
                 if (response.isSuccessful) {
                     todoMutableLiveData.value = TodoUiState.Success(response.body()!!)
+                    Log.d("TodoViewModel", "onResponse: SUCCESS")
                 }
             }
 
             override fun onFailure(p0: Call<TodoResponse>, throwable: Throwable) {
                 todoMutableLiveData.value = TodoUiState.Error(throwable)
+                Log.d("TodoViewModel", "onFailure: ERROR")
             }
         })
     }
