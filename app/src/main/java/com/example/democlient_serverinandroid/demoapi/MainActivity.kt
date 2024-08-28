@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.callApiBtn.setOnClickListener {
-            viewModel.getTodoEnqueue()
+            viewModel.getTodoSuspend()
         }
 
         viewModel.todoLiveData.observe(this) { response: TodoUiState ->

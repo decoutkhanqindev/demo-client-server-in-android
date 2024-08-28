@@ -18,4 +18,7 @@ interface TodoService {
 
     @GET("/todos/1")
     fun getTodo(): Call<TodoResponse>
+
+    @GET("/todos/1")
+    suspend fun getTodoSuspend(): TodoResponse
 }

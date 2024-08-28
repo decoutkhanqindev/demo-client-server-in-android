@@ -4,6 +4,11 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -40,5 +45,26 @@ class TodoViewModel(private val todoService: TodoService) : ViewModel() {
                 Log.d("TodoViewModel", "onFailure: ERROR")
             }
         })
+    }
+
+    fun getTodoSuspend() {
+        todoMutableLiveData.value = TodoUiState.Loading
+
+        viewModelScope.launch {
+            try {
+                val result: TodoResponse = withContext(Dispatchers.IO) {
+                    todoService.getTodoSuspend()
+                }
+                todoMutableLiveData.value = TodoUiState.Success(result)
+            } catch (cancel: CancellationException) {
+                //  to ensure that coroutine cancellations are handled correctly and propagated up to parent coroutines.
+                throw cancel
+                // Rethrowing CancellationException (throw cancel) is important because it allows the cancellation signal
+                // to propagate up to parent coroutines. If you don't rethrow the exception, the parent coroutine won't know that
+                // the child coroutine has been canceled and can continue executing, leading to problems like resource leaks.
+            } catch (throwable: Throwable) {
+                todoMutableLiveData.value = TodoUiState.Error(throwable)
+            }
+        }
     }
 }
