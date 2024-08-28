@@ -21,3 +21,5 @@ data class TodoResponse(
     @field:SerializedName("title") val title: String? = null,
     @field:SerializedName("userId") val userId: Int? = null
 )
+
+

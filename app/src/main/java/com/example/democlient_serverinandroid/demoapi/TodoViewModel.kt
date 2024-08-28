@@ -67,4 +67,23 @@ class TodoViewModel(private val todoService: TodoService) : ViewModel() {
             }
         }
     }
+
+    fun getTodos() {
+        todoMutableLiveData.value = TodoUiState.Loading
+
+        viewModelScope.launch {
+            try {
+                val response: List<TodoResponse> = withContext(Dispatchers.IO) {
+                    todoService.getTodos()
+                }
+                todoMutableLiveData.value = TodoUiState.SuccessTodos(response)
+                Log.d("TodoViewModel", "onResponse: SUCCESS")
+            } catch (cancel: CancellationException) {
+                throw cancel
+            } catch (throwable: Throwable) {
+                todoMutableLiveData.value = TodoUiState.Error(throwable)
+                Log.d("TodoViewModel", "onFailure: ERROR")
+            }
+        }
+    }
 }

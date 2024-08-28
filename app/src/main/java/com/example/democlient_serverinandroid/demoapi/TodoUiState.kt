@@ -4,5 +4,6 @@ sealed interface TodoUiState {
     // state of api
     data object Loading : TodoUiState
     data class Success(val todo: TodoResponse) : TodoUiState
+    data class SuccessTodos(val todos: List<TodoResponse>) : TodoUiState
     data class Error(val throwable: Throwable) : TodoUiState
 }
