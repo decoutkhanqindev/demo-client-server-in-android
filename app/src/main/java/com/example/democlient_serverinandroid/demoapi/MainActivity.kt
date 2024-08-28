@@ -24,20 +24,25 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.callApiBtn.setOnClickListener {
-            viewModel.getTodos()
+            viewModel.postNewPost()
         }
 
         viewModel.todoLiveData.observe(this) { response: TodoUiState ->
             when (response) {
                 is TodoUiState.Loading -> binding.responseText.text = "Loading...."
 
-                is TodoUiState.Success -> binding.responseText.text = response.todo.title.toString()
+                is TodoUiState.SuccessGetTodo -> binding.responseText.text =
+                    response.todo.title.toString()
 
-                is TodoUiState.SuccessTodos -> binding.responseText.text =
+                is TodoUiState.SuccessGetTodos -> binding.responseText.text =
                     response.todos.joinToString { it.title.toString() }
+
+                is TodoUiState.SuccessPostNewPost -> binding.responseText.text =
+                    response.newPostResponse.toString()
 
                 is TodoUiState.Error -> binding.responseText.text =
                     "Error: ${response.throwable.message}"
+
             }
         }
     }

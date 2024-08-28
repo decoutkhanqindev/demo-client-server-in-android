@@ -2,7 +2,9 @@ package com.example.democlient_serverinandroid.demoapi
 
 import retrofit2.Call
 import retrofit2.Retrofit
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 
 interface TodoService {
     // contains all methods like GET, POST, PUT, DELETE, .....
@@ -24,4 +26,7 @@ interface TodoService {
 
     @GET("/todos")
     suspend fun getTodos(): List<TodoResponse>
+
+    @POST("/posts")
+    suspend fun postNewPost(@Body newPost: NewPost): PostResponse
 }

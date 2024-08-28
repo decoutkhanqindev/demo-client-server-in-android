@@ -22,7 +22,7 @@ class TodoViewModel(private val todoService: TodoService) : ViewModel() {
         val response: Response<TodoResponse> = todoService.getTodo().execute()
 
         if (response.isSuccessful) {
-            todoMutableLiveData.value = TodoUiState.Success(response.body()!!)
+            todoMutableLiveData.value = TodoUiState.SuccessGetTodo(response.body()!!)
         } else {
             todoMutableLiveData.value = TodoUiState.Error(Throwable(response.message()))
         }
@@ -35,7 +35,7 @@ class TodoViewModel(private val todoService: TodoService) : ViewModel() {
         todoService.getTodo().enqueue(object : Callback<TodoResponse> {
             override fun onResponse(p0: Call<TodoResponse>, response: Response<TodoResponse>) {
                 if (response.isSuccessful) {
-                    todoMutableLiveData.value = TodoUiState.Success(response.body()!!)
+                    todoMutableLiveData.value = TodoUiState.SuccessGetTodo(response.body()!!)
                     Log.d("TodoViewModel", "onResponse: SUCCESS")
                 }
             }
@@ -55,7 +55,7 @@ class TodoViewModel(private val todoService: TodoService) : ViewModel() {
                 val result: TodoResponse = withContext(Dispatchers.IO) {
                     todoService.getTodoSuspend()
                 }
-                todoMutableLiveData.value = TodoUiState.Success(result)
+                todoMutableLiveData.value = TodoUiState.SuccessGetTodo(result)
             } catch (cancel: CancellationException) {
                 //  to ensure that coroutine cancellations are handled correctly and propagated up to parent coroutines.
                 throw cancel
@@ -76,8 +76,27 @@ class TodoViewModel(private val todoService: TodoService) : ViewModel() {
                 val response: List<TodoResponse> = withContext(Dispatchers.IO) {
                     todoService.getTodos()
                 }
-                todoMutableLiveData.value = TodoUiState.SuccessTodos(response)
+                todoMutableLiveData.value = TodoUiState.SuccessGetTodos(response)
                 Log.d("TodoViewModel", "onResponse: SUCCESS")
+            } catch (cancel: CancellationException) {
+                throw cancel
+            } catch (throwable: Throwable) {
+                todoMutableLiveData.value = TodoUiState.Error(throwable)
+                Log.d("TodoViewModel", "onFailure: ERROR")
+            }
+        }
+    }
+
+    fun postNewPost() {
+        todoMutableLiveData.value = TodoUiState.Loading
+
+        viewModelScope.launch {
+            try {
+                val newPost: NewPost = NewPost("DemoPost", "MinhKhang", 10000)
+                val response: PostResponse = withContext(Dispatchers.IO) {
+                    todoService.postNewPost(newPost = newPost)
+                }
+                todoMutableLiveData.value = TodoUiState.SuccessPostNewPost(response)
             } catch (cancel: CancellationException) {
                 throw cancel
             } catch (throwable: Throwable) {
