@@ -71,5 +71,9 @@ dependencies {
     implementation(libs.moshi.kotlin)
 
     // okhttp
-    implementation(libs.okhttp)
+    // define a BOM and its version
+    implementation(platform(libs.okhttp.bom))
+    // define any required OkHttp artifacts without version
+    implementation(libs.okhttp3.okhttp)
+    implementation(libs.logging.interceptor)
 }
