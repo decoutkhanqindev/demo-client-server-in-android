@@ -16,7 +16,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlin.coroutines.cancellation.CancellationException
 
-
 class DemoMoshiGsonViewModel(application: Application) : AndroidViewModel(application) {
     private val moshi: Moshi by lazy { buildMoshi() }
     private val gson: Gson by lazy { buildGson() }
@@ -44,7 +43,7 @@ class DemoMoshiGsonViewModel(application: Application) : AndroidViewModel(applic
     @OptIn(ExperimentalStdlibApi::class)
     private suspend fun parseJsonInternal(): String = withContext(Dispatchers.IO) {
         val jsonString: String =
-            getApplication<Application>().readAssetAsText(fileName = "student.json")
+            getApplication<Application>().readAssetAsText(fileName = "student_invalid.json")
         val adapter: JsonAdapter<Student> = moshi.adapter<Student>()
         val student: Student? = adapter.fromJson(jsonString)
         student?.toString() ?: "<null>"
