@@ -50,16 +50,16 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     // ViewModel
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.4")
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
     // LiveData
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.4")
+    implementation(libs.androidx.lifecycle.livedata.ktx)
 
     // retrofit
     implementation(libs.retrofit)
     // converter json obj -> pojo
     // gson
     implementation(libs.retrofit2.converter.gson)
-
-
     implementation(libs.gson)
+    // moshi
+    implementation(libs.moshi.kotlin)
 }

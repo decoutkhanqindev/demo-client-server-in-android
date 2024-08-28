@@ -42,7 +42,6 @@ class MainActivity : AppCompatActivity() {
 
                 is TodoUiState.Error -> binding.responseText.text =
                     "Error: ${response.throwable.message}"
-
             }
         }
     }
