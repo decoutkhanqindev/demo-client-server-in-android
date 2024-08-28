@@ -52,9 +52,9 @@ dependencies {
 
     // retrofit
     implementation(libs.retrofit)
-    // converter
+    // converter json obj -> pojo
     // gson
-    implementation(libs.converter.gson) // json obj -> pojo
+    implementation(libs.retrofit2.converter.gson)
 
 
     implementation(libs.gson)
