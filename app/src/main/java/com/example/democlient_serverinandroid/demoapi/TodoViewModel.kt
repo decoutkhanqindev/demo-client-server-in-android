@@ -12,8 +12,8 @@ class TodoViewModel(private val todoService: TodoService) : ViewModel() {
     private val todoMutableLiveData: MutableLiveData<TodoUiState> = MutableLiveData<TodoUiState>()
     val todoLiveData: LiveData<TodoUiState> get() = todoMutableLiveData
 
-    // execute() -> SYNCHRONOUS -> block main thread -> UI thread
     fun getTodoExecute() {
+        // execute() -> SYNCHRONOUS -> block main thread
         val response: Response<TodoResponse> = todoService.getTodo().execute()
 
         if (response.isSuccessful) {
@@ -23,8 +23,8 @@ class TodoViewModel(private val todoService: TodoService) : ViewModel() {
         }
     }
 
-    // enqueue() -> ASYNCHRONOUS -> non block main thread -> UI thread
     fun getTodoEnqueue() {
+        // enqueue() -> ASYNCHRONOUS -> non block main thread
         todoMutableLiveData.value = TodoUiState.Loading
 
         todoService.getTodo().enqueue(object : Callback<TodoResponse> {
