@@ -8,14 +8,19 @@ object ServiceLocator {
     // It works by creating a central object, called a "Service Locator", that is responsible for
     // storing and providing dependencies when requested.
 
+    // https://jsonplaceholder.typicode.com/todos/1
+    // https://jsonplaceholder.typicode.com -> domain or url
+    // todos/1 -> endpoint
+
     private const val BASE_URL: String = "https://jsonplaceholder.typicode.com"
 
     private val retrofit: Retrofit by lazy {
-        Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
+        Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create())
             .build()
     }
 
-
+    // instance retrofit service to call api
+    val todoService: TodoService by lazy {
+        TodoService.retrofitProvider(retrofit)
+    }
 }
