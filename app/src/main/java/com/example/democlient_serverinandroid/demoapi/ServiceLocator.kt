@@ -49,7 +49,6 @@ object ServiceLocator {
             }).addInterceptor(interceptor = CustomHeaderInterceptor())
             .addInterceptor(interceptor = AuthInterceptor(JwtTokenManger())).build()
 
-
     // converter json -> pojo
     private fun moshiProvider(): Moshi = Moshi.Builder().addLast(KotlinJsonAdapterFactory()).build()
     private fun gsonProvider(): Gson = Gson()

@@ -6,6 +6,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.democlient_serverinandroid.demoapi.ServiceLocator
+import com.example.democlient_serverinandroid.demoapi.TodoService
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.squareup.moshi.Moshi
@@ -19,6 +21,10 @@ class DemoMoshiGsonViewModel(application: Application) : AndroidViewModel(applic
     private val moshi: Moshi by lazy { buildMoshi() }
     private val gson: Gson by lazy { buildGson() }
 
+    private val todoService: TodoService by lazy {
+        ServiceLocator.todoService
+    }
+
     private val stateMutableLiveData = MutableLiveData<String?>(null)
     val stateLiveData: LiveData<String?> get() = stateMutableLiveData
 
@@ -27,7 +33,8 @@ class DemoMoshiGsonViewModel(application: Application) : AndroidViewModel(applic
             stateMutableLiveData.value = "Loading..."
 
             try {
-                stateMutableLiveData.value = parseJsonInternal()
+                // stateMutableLiveData.value = parseJsonInternal()
+                stateMutableLiveData.value = todoService.getTodos().toString()
                 Log.d("DemoMoshiGsonViewModel", "parse: SUCCESS ")
             } catch (cancel: CancellationException) {
                 stateMutableLiveData.value = null
