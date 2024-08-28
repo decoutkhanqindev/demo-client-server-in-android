@@ -70,6 +70,7 @@ dependencies {
     implementation(libs.gson)
     // moshi
     implementation(libs.moshi.kotlin)
+    implementation(libs.converter.moshi)
 
     // okhttp
     // define a BOM and its version
