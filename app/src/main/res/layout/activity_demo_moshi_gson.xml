@@ -8,7 +8,7 @@
     tools:context=".demookhttp.DemoMoshiGsonActivity">
 
     <TextView
-        android:id="@+id/responseText"
+        android:id="@+id/convertText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World!"
@@ -19,14 +19,14 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/callApiBtn"
+        android:id="@+id/convertBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Convert"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/responseText"
+        app:layout_constraintTop_toBottomOf="@+id/convertText"
         app:layout_constraintVertical_bias="0.706" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
