@@ -92,7 +92,7 @@ class TodoViewModel(private val todoService: TodoService) : ViewModel() {
 
         viewModelScope.launch {
             try {
-                val newPost: NewPost = NewPost("DemoPost", "MinhKhang", 10000)
+                val newPost = NewPost("DemoPost", "MinhKhang", 10000)
                 val response: PostResponse = withContext(Dispatchers.IO) {
                     todoService.postNewPost(newPost = newPost)
                 }
