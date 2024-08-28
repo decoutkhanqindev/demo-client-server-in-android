@@ -7,9 +7,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
-import com.squareup.moshi.JsonAdapter
+import com.google.gson.reflect.TypeToken
 import com.squareup.moshi.Moshi
-import com.squareup.moshi.adapter
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -40,13 +39,19 @@ class DemoMoshiGsonViewModel(application: Application) : AndroidViewModel(applic
         }
     }
 
-    @OptIn(ExperimentalStdlibApi::class)
     private suspend fun parseJsonInternal(): String = withContext(Dispatchers.IO) {
         val jsonString: String =
-            getApplication<Application>().readAssetAsText(fileName = "student_invalid.json")
-        val adapter: JsonAdapter<Student> = moshi.adapter<Student>()
-        val student: Student? = adapter.fromJson(jsonString)
-        student?.toString() ?: "<null>"
+            getApplication<Application>().readAssetAsText(fileName = "students_list_invalid_null.json")
+        // moshi
+        // val adapter: JsonAdapter<List<Student>> = moshi.adapter<List<Student>>()
+        // val students: List<Student>? = adapter.fromJson(jsonString)
+
+        // gson
+        // val student: Student? = gson.fromJson(jsonString, Student::class.java)
+        val students: List<Student>? = gson.fromJson(
+            jsonString, object : TypeToken<List<Student>>() {}.type
+        )
+        students?.toString() ?: "<null>"
     }
 
     private fun buildMoshi(): Moshi = Moshi.Builder().addLast(KotlinJsonAdapterFactory()).build()
