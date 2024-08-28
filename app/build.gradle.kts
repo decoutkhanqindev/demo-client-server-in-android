@@ -69,4 +69,7 @@ dependencies {
     implementation(libs.gson)
     // moshi
     implementation(libs.moshi.kotlin)
+
+    // okhttp
+    implementation(libs.okhttp)
 }
