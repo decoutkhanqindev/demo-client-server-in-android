@@ -11,10 +11,11 @@ import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapter
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlin.coroutines.cancellation.CancellationException
+
 
 class DemoMoshiGsonViewModel(application: Application) : AndroidViewModel(application) {
     private val moshi: Moshi by lazy { buildMoshi() }
@@ -34,7 +35,7 @@ class DemoMoshiGsonViewModel(application: Application) : AndroidViewModel(applic
                 stateMutableLiveData.value = null
                 throw cancel
             } catch (e: Exception) {
-                Log.d("DemoMoshiGsonViewModel", "parse: FAILED")
+                Log.d("DemoMoshiGsonViewModel", "parse: ${e.message}")
                 stateMutableLiveData.value = e.message.orEmpty()
             }
         }
@@ -50,7 +51,5 @@ class DemoMoshiGsonViewModel(application: Application) : AndroidViewModel(applic
     }
 
     private fun buildMoshi(): Moshi = Moshi.Builder().addLast(KotlinJsonAdapterFactory()).build()
-    private fun buildGson(): Gson {
-        TODO("Not yet implemented")
-    }
+    private fun buildGson(): Gson = Gson()
 }
