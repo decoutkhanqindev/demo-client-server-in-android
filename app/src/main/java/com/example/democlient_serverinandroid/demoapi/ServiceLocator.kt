@@ -32,7 +32,7 @@ object ServiceLocator {
 
     // instance retrofit service to call api
     val todoService: TodoService by lazy {
-        TodoService.retrofitProvider(retrofit)
+        retrofit.create(TodoService::class.java)
     }
 
     // OkHttpClient -> modify request

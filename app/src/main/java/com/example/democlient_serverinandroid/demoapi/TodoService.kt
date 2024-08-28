@@ -12,11 +12,11 @@ interface TodoService {
     // https://jsonplaceholder.typicode.com -> domain or url
     // todos/1 -> endpoint
 
-    companion object {
-        // provide retrofit to call api
-        fun retrofitProvider(retrofit: Retrofit): TodoService =
-            retrofit.create(TodoService::class.java)
-    }
+//    companion object {
+//        // provide retrofit to call api
+//        fun retrofitProvider(retrofit: Retrofit): TodoService =
+//            retrofit.create(TodoService::class.java)
+//    }
 
     @GET("/todos/1")
     fun getTodo(): Call<TodoResponse>
